@@ -1,0 +1,24 @@
+{
+  "name": "ttpp-projekt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatejBrHe/TTPP-projekt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MatejBrHe/TTPP-projekt/issues"
+  },
+  "homepage": "https://github.com/MatejBrHe/TTPP-projekt#readme",
+  "dependencies": {
+    "selenium-webdriver": "^4.28.1"
+  }
+}
