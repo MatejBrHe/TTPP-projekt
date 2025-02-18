@@ -2,7 +2,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 const { describe, it, before, beforeEach, after } = require('node:test');
 const assert = require('assert');
 const { browser } = require('../settings');
-const { validUser, noPasswordUser, incorrectPasswordUser, noUsernameUser, incorrectUsernameUser, nonExistingUser } = require('../testdata');
+const { validUser, emptyUser, mismatchedPasswordUser, noPhoneNumberUser, noUsernameUser, noPasswordUser, noInfoUser }= require('../testdata');
 
 
 /*
@@ -11,39 +11,44 @@ const { validUser, noPasswordUser, incorrectPasswordUser, noUsernameUser, incorr
 ##############################
 */
 
-describe('Login', (t) => {
+describe('Register', (t) => {
 	var driver;
 	before(async () => {
 		driver = await new Builder().forBrowser(browser).build();
-		await Register(driver, validUser);
-		await Logout(driver);
 	});
-	beforeEach(async() => {
-		await driver.get('https://parabank.parasoft.com/parabank/index.htm');
+	beforeEach(async () => {
+		await driver.get('https://parabank.parasoft.com/parabank/register.htm');
 	});
 	after(async () => {
 		await ResetDB(driver);
 		await driver.quit();
 	});
 
-	it('No password', async () => {
-		await LoginFail(driver, noPasswordUser);
+	it('No data', async () => {
+		await RegisterFail(driver, emptyUser);
 	});
-	it('Incorrect password', async () => {
-		await LoginFail(driver, incorrectPasswordUser);
+	it('No user info', async () => {
+		await RegisterFail(driver, noInfoUser);
 	});
 	it('No username', async () => {
-		await LoginFail(driver, noUsernameUser);
+		await RegisterFail(driver, noUsernameUser);
 	});
-	it('Incorrect username', async () => {
-		await LoginFail(driver, incorrectUsernameUser);
+	it('No password', async () => {
+		await RegisterFail(driver, noPasswordUser);
 	});
-	it('Non existing user', async () => {
-		await LoginFail(driver, nonExistingUser);
+	it('Passwords dont match', async () => {
+		await RegisterFail(driver, mismatchedPasswordUser);
 	});
-	it('Correct login data', async () => {
-		await LoginSuccess(driver, validUser);
+	it('Correct data', async () => {
+		await RegisterSuccess(driver, validUser);
 		await Logout(driver);
+	});
+	it('No phone number', async () => {
+		await RegisterSuccess(driver, noPhoneNumberUser);
+		await Logout(driver);
+	});
+	it('User with existing username', async () => {
+		await RegisterFail(driver, validUser);
 	});
 });
 
@@ -54,35 +59,8 @@ describe('Login', (t) => {
 ##############################
 */
 
-async function LoginFail(driver, user) {
+async function RegisterFail(driver, user) {
 	try {
-		await driver.wait(until.elementLocated(By.name('username')), 5000);
-		await driver.findElement(By.name('username')).sendKeys(user.username);
-		await driver.findElement(By.name('password')).sendKeys(user.password, Key.RETURN);
-		await driver.wait(until.elementLocated(By.className('error')), 5000);
-	}
-	catch(err) {
-		new assert.AssertionError(err.message);
-	}
-}
-
-async function LoginSuccess(driver, user) {
-	try {
-		await driver.wait(until.elementLocated(By.name('username')), 5000);
-		await driver.findElement(By.name('username')).sendKeys(user.username);
-		await driver.findElement(By.name('password')).sendKeys(user.password, Key.RETURN);
-		await driver.wait(until.elementLocated(By.xpath('/html/body/div[1]/div[3]/div[1]/ul/li[8]/a')), 5000);
-		let logout = await driver.findElement(By.xpath('/html/body/div[1]/div[3]/div[1]/ul/li[8]/a'));
-		await assert.equal(await logout.getText(), 'Log Out');
-	}
-	catch(err) {
-		new assert.AssertionError(err.message);
-	}
-}
-
-async function Register(driver, user) {
-	try {
-		await driver.get('https://parabank.parasoft.com/parabank/register.htm');
 		await driver.findElement(By.name('customer.firstName')).sendKeys(user.fName);
 		await driver.findElement(By.name('customer.lastName')).sendKeys(user.lName);
 		await driver.findElement(By.name('customer.address.street')).sendKeys(user.address);
@@ -94,10 +72,32 @@ async function Register(driver, user) {
 		await driver.findElement(By.name('customer.username')).sendKeys(user.username);
 		await driver.findElement(By.name('customer.password')).sendKeys(user.password);
 		await driver.findElement(By.name('repeatedPassword')).sendKeys(user.passwordConfirm, Key.RETURN);
-		await driver.wait(until.elementLocated(By.xpath('/html/body/div[1]/div[3]/div[1]/ul/li[8]/a')), 5000);
+		await driver.wait(until.elementLocated(By.className('error')), 5000);
 	}
 	catch(err) {
-		console.log(err.message);
+		new assert.AssertionError(err.message);
+	}
+}
+
+async function RegisterSuccess(driver, user) {
+	try {
+		await driver.findElement(By.name('customer.firstName')).sendKeys(user.fName);
+		await driver.findElement(By.name('customer.lastName')).sendKeys(user.lName);	
+		await driver.findElement(By.name('customer.address.street')).sendKeys(user.address);
+		await driver.findElement(By.name('customer.address.city')).sendKeys(user.city);
+		await driver.findElement(By.name('customer.address.state')).sendKeys(user.state);
+		await driver.findElement(By.name('customer.address.zipCode')).sendKeys(user.zipCode);
+		await driver.findElement(By.name('customer.phoneNumber')).sendKeys(user.phone);
+		await driver.findElement(By.name('customer.ssn')).sendKeys(user.ssn);
+		await driver.findElement(By.name('customer.username')).sendKeys(user.username);
+		await driver.findElement(By.name('customer.password')).sendKeys(user.password);
+		await driver.findElement(By.name('repeatedPassword')).sendKeys(user.passwordConfirm, Key.RETURN);
+		await driver.wait(until.elementLocated(By.xpath('/html/body/div[1]/div[3]/div[1]/ul/li[8]/a')), 5000);
+		let logout = await driver.findElement(By.xpath('/html/body/div[1]/div[3]/div[1]/ul/li[8]/a'));
+		await assert.equal(await logout.getText(), 'Log Out');
+	}
+	catch(err) {
+		new assert.AssertionError(err.message);
 	}
 }
 

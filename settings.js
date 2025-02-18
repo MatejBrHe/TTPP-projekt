@@ -1,3 +1,5 @@
-const browser = 'firefox';
+const settings = {
+	browser: 'firefox'
+};
 
-module.exports = browser;
+module.exports = settings;
