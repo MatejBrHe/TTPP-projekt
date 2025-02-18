@@ -139,7 +139,7 @@ async function UpdateInfoSuccess(driver, newInfo) {
 		await submit.click(); //
 		await submit.click(); // Doesn't want to click the button if there is only one submit.click()
 		await submit.click(); //
-		await driver.wait(until.elementIsVisible(driver.findElement(By.id('updateProfileResult'))), 5000);
+		await driver.wait(until.elementIsVisible(await driver.findElement(By.id('updateProfileResult'))), 5000);
 		let result = await driver.findElement(By.xpath('/html/body/div[1]/div[3]/div[2]/div/div[2]/h1'));
 		await assert.equal(await result.getText(), 'Profile Updated');
 	}
