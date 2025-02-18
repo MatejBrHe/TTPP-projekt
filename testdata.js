@@ -14,7 +14,7 @@ const data = {
 	},
 	mismatchedPasswordUser: {
 		fName: 'Marko',
-		lName: 'Markić',
+		lName: 'Markic',
 		address: 'Europska avenija 2',
 		city: 'Osijek',
 		state: 'Hrvatska',
@@ -27,7 +27,7 @@ const data = {
 	},
 	incorrectPasswordUser: {
 		fName: 'Marko',
-		lName: 'Markić',
+		lName: 'Markic',
 		address: 'Europska avenija 2',
 		city: 'Osijek',
 		state: 'Hrvatska',
@@ -40,7 +40,7 @@ const data = {
 	},
 	incorrectUsernameUser: {
 		fName: 'Marko',
-		lName: 'Markić',
+		lName: 'Markic',
 		address: 'Europska avenija 2',
 		city: 'Osijek',
 		state: 'Hrvatska',
@@ -53,7 +53,7 @@ const data = {
 	},
 	validUser: {
 		fName: 'Marko',
-		lName: 'Markić',
+		lName: 'Markic',
 		address: 'Europska avenija 2',
 		city: 'Osijek',
 		state: 'Hrvatska',
@@ -66,7 +66,7 @@ const data = {
 	},
 	noUsernameUser: {
 		fName: 'Marko',
-		lName: 'Markić',
+		lName: 'Markic',
 		address: 'Europska avenija 2',
 		city: 'Osijek',
 		state: 'Hrvatska',
@@ -79,7 +79,7 @@ const data = {
 	},
 	noPasswordUser: {
 		fName: 'Marko',
-		lName: 'Markić',
+		lName: 'Markic',
 		address: 'Europska avenija 2',
 		city: 'Osijek',
 		state: 'Hrvatska',
@@ -92,7 +92,7 @@ const data = {
 	},
 	noPhoneNumberUser: {
 		fName: 'Roko',
-		lName: 'Rokić',
+		lName: 'Rokic',
 		address: 'Zagorski put 3',
 		city: 'Split',
 		state: 'Hrvatska',
@@ -118,7 +118,7 @@ const data = {
 	},
 	nonExistingUser: {
 		fName: 'Pero',
-		lName: 'Perić',
+		lName: 'Peric',
 		address: 'Slavonska avenija 10',
 		city: 'Zagreb',
 		state: 'Hrvatska',
