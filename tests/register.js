@@ -13,6 +13,7 @@ const { validUser, emptyUser, mismatchedPasswordUser, noPhoneNumberUser, noUsern
 
 describe('Register', (t) => {
 	var driver;
+
 	before(async () => {
 		driver = await new Builder().forBrowser(browser).build();
 	});

@@ -13,6 +13,7 @@ const { validUser } = require('../testdata');
 
 describe('Update user info', (t) => {
 	var driver;
+
 	before(async () => {
 		driver = await new Builder().forBrowser(browser).build();
 		await Register(driver, validUser);
@@ -143,7 +144,6 @@ async function UpdateInfoSuccess(driver, newInfo) {
 		await assert.equal(await result.getText(), 'Profile Updated');
 	}
 	catch(err) {
-		console.log(err.message);
 		new assert.AssertionError(err.message);
 	}
 }

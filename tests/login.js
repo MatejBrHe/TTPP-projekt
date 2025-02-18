@@ -13,6 +13,7 @@ const { validUser, noPasswordUser, incorrectPasswordUser, noUsernameUser, incorr
 
 describe('Login', (t) => {
 	var driver;
+
 	before(async () => {
 		driver = await new Builder().forBrowser(browser).build();
 		await Register(driver, validUser);
